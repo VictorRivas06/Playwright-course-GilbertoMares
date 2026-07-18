@@ -7,8 +7,8 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
+    "module": "esnext", // se recomienda tener las mismas versiones
+    "target": "esnext", 
     //"types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -35,7 +35,7 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,  // se cambia a false para ayudar a exportar
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
@@ -44,6 +44,8 @@
     "playwright.config.ts",
     "types/**/*.ts",
     "tests/**/*.ts",
-    "module-*/**/*.ts"
+    "module-*/**/*.ts",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
   ]
 }
