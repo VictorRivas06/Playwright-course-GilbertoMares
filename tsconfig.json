@@ -7,8 +7,9 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
+    "module": "esnext", // se recomienda tener las mismas versiones
+    "moduleResolution": "bundler", //soportar nuevas exportaciones de TS
+    "target": "esnext", 
     //"types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -35,7 +36,9 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+
+    "verbatimModuleSyntax": false, // Permite omitir 'type' en imports/exports; TypeScript limpia los tipos automáticamente al compilar.
+
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
