@@ -36,11 +36,7 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-<<<<<<< Updated upstream
-    "verbatimModuleSyntax": true,
-=======
     "verbatimModuleSyntax": false, // Permite omitir 'type' en imports/exports; TypeScript limpia los tipos automáticamente al compilar.
->>>>>>> Stashed changes
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
@@ -49,6 +45,8 @@
     "playwright.config.ts",
     "types/**/*.ts",
     "tests/**/*.ts",
-    "module-*/**/*.ts"
+    "module-*/**/*.ts",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
   ]
 }
