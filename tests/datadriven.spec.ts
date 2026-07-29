@@ -18,6 +18,8 @@ const CurrencySymbol: Partial<Record<Currency, string>> = {
   // partial le decimos que no necesitamos todos, si no solo algunos
   MXN: "$",
   JPY: "￥",
+  USD: "$",
+  CHF: "CHF"
 };
 
 test.describe("Smoke parametrized by market", () => {
@@ -25,16 +27,16 @@ test.describe("Smoke parametrized by market", () => {
     test(`TC-${market.code} - login + catalog in market ${market.code}`, async ({ page }) => {
       //Arrange
       await page.goto("/");
-
       //Act
       await page.getByTestId("username-desktop").fill(standardUser.username);
       await page.getByTestId("password-desktop").fill(standardUser.password);
       await page.getByTestId(`market-${market.code}`).click();
       await page.getByTestId("login-button-desktop").click();
-
       //Assert
       await expect(page).toHaveURL(/\/catalog/);
       const symbol = CurrencySymbol[market.currency]
+      console.log(`Simbolo para  ${market.code}, Symbol:'${symbol}'`);
+
       if (!symbol) return;
       await expect(page.locator("body")).toContainText(symbol);
 
