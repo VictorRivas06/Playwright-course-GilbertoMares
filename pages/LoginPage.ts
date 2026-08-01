@@ -1,65 +1,67 @@
-import { expect, type Locator } from "@playwright/test"
-import { BasePage } from "./BasePage"
-import type { CountryCode, User } from "../types"
+import { expect, type Locator } from "@playwright/test";
+import { BasePage } from "./BasePage";
+import type { CountryCode, User } from "../types";
 
 export class LoginPage extends BasePage {
-    readonly path = "/";
+  readonly path = "/";
 
-    //Object Repository
-    private txtUserName: string = "username";
-    private txtPassword: string = "password";
-    private btnMarket: string = "market-";
-    private btnSignIn: string = "login-button";
-    private lblError: string = "login-error";
+  private txtUsername: string = "username";
+  private txtPassword: string = "password";
+  private btnMarket: string = "market-";
+  private btnSignIn: string = "login-button";
+  private lblError: string = "login-error";
 
-    //Accesor y Mutator - Getter y Setter
-    private get usernameInput(): Locator {
-        return this.testIdByResponsive(this.txtUserName);
-    }
+  // --- Locators privados: documentación interna del Page ---
+  private get usernameInput(): Locator {
+    return this.tid(this.txtUsername);
+  }
 
-    private get passwordInput(): Locator {
-        return this.testIdByResponsive(this.txtPassword);
-    }
+  private get passwordInput(): Locator {
+    return this.tid(this.txtPassword);
+  }
 
-    private get signInButtonm(): Locator {
-        return this.testIdByResponsive(this.btnSignIn);
-    }
+  private get signInButton(): Locator {
+    return this.tid(this.btnSignIn);
+  }
 
-    private get errorMessage(): Locator {
-        return this.testIdByResponsive(this.lblError);
-    }
+  private get errorMessage(): Locator {
+    return this.tid(this.lblError);
+  }
 
-    private marketFlag(countryCode: CountryCode): Locator {
-        return this.testIdByResponsive(`${this.btnMarket}${countryCode}`)
-    }
+  private marketFlag(code: CountryCode): Locator {
+    return this.tid(`${this.btnMarket}${code}`);
+  }
 
-    //Acciones en mi pagina
-    async goTo(): Promise<void> {
-        await this.page.goto(this.path)
-    }
+  // --- Acciones públicas: la interfaz del POM ---
 
-    /*async typeUserName(userName: string): Promise<void> {
-        this.usernameInput.fill(userName);
-    }*/
+  async goto(): Promise<void> {
+    await this.page.goto(this.path);
+  }
 
-    async slectMarket(code: CountryCode): Promise<void> {
-        await this.marketFlag(code).click();
-    }
+  async selectMarket(code: CountryCode): Promise<void> {
+    await this.marketFlag(code).click();
+  }
 
-    async loginAs(user: User): Promise<void> {
-        await this.usernameInput.fill(user.username)
-        await this.passwordInput.fill(user.password)
-        await this.signInButtonm.click();
-    }
+  async loginAs(user: User): Promise<void> {
+    await this.usernameInput.fill(user.username);
+    await this.passwordInput.fill(user.password);
+    await this.signInButton.click();
+  }
 
-    async loginMarket(user: User, code: CountryCode): Promise<void> {
-        await this.slectMarket(code);
-        await this.loginAs(user);
-        await this.waitForUrl(/\/catalog/);
-    }
+  async loginInMarket(user: User, code: CountryCode): Promise<void> {
+    await this.goto();
+    await this.selectMarket(code);
+    await this.loginAs(user);
+    await this.waitForUrl(/\/catalog/);
+  }
 
-    async verifyLoginError(): Promise<void> {
-        await expect(this.errorMessage).toBeVisible();
-    }
+  // --- Assertions de estado ---
+
+  async expectLoaded(): Promise<void> {
+    await expect(this.signInButton).toBeVisible();
+  }
+
+  async expectLoginError(): Promise<void> {
+    await expect(this.errorMessage).toBeVisible();
+  }
 }
-
