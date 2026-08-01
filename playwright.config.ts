@@ -25,10 +25,10 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   timeout: 30_000, //para acciones en general o await
-  expect: {timeout:10_000}, //para mis validaciones
+  expect: { timeout: 10_000 }, //para mis validaciones
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ["html",{open:"always"}], //siempre y cuando este abierto el server de reportes se abre automatico mi reporte
+    ["html", { open: "always" }], //siempre y cuando este abierto el server de reportes se abre automatico mi reporte
     ["list"] //TEST RESULT de Visual Studio me dé más detalle de mis test
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -37,30 +37,40 @@ export default defineConfig({
     baseURL: process.env.BASE_URL ?? "https://omnipizza-frontend.onrender.com", // el ?? es para preguntar si existe o si viene vacia
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    screenshot:"only-on-failure",
-    video:"retain-on-failure",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
     navigationTimeout: 45_000, //tiempo de carga entre una pagina y otra
     headless: process.env.HEADLESS === "true" ? true : false, //Por default ya viene como True
   },
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+    { name: "setup", testMatch: /.*\.setup\.ts/ },
 
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "chromium",
+      use: { ...devices['Desktop Chrome'], storageState: ".auth/user.json" },
+      dependencies: ["setup"],
+      testMatch: [/tests\/.*\.spec\.ts/]
     },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    /*
+   {
+     name: 'chromium',
+     use: { ...devices['Desktop Chrome'] },
+   },
 
-    /* Test against mobile viewports. */
+   {
+     name: 'firefox',
+     use: { ...devices['Desktop Firefox'] },
+   },
+
+   {
+     name: 'webkit',
+     use: { ...devices['Desktop Safari'] },
+   },
+
+   /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
     //   use: { ...devices['Pixel 5'] },

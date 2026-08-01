@@ -48,5 +48,6 @@
     "types/**/*.d.ts",
     "types/**/*.ts",
     "pages/**/*.ts",
+    "fixtures/**/*.ts"
   ]
 }
