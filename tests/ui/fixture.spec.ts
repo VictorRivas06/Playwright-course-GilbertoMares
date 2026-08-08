@@ -1,4 +1,4 @@
-import { expect, test } from "../fixtures/omnipizza"
+import { expect, test } from "../../fixtures/omnipizza"
 
 test.describe("Fixture inject POM", () => {
     test("The fixture deliver login/catalog pages ready to use", async ({ loginPage, catalogPage, standardUser, defaultMarket }) => {

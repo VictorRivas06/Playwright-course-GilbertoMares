@@ -9,6 +9,7 @@ import { defineConfig, devices } from '@playwright/test';
 //  dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 import "dotenv/config";
+import { test } from './fixtures/omnipizza';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -53,10 +54,15 @@ export default defineConfig({
       dependencies: ["setup"],
       testMatch: [/tests\/.*\.spec\.ts/]
     },
+    {
+      name: "api",
+      use: { baseURL: process.env.API_URL ?? "https://omnipizza-backend.onrender.com" },
+      testMatch: [/tests\/api\/.*\.spec\.ts/]
+    }
 
     /*
    {
-     name: 'chromium',
+     name: 'ui-chromium',
      use: { ...devices['Desktop Chrome'] },
    },
 

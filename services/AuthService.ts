@@ -4,7 +4,7 @@ import { LoginResponse, User } from "../types";
 
 export class AuthService extends BaseService {
     protected basePath(): string {
-        return "/api/auth/"
+        return "/api/auth"
     }
 
     static async create(baseURL: string): Promise<AuthService> {
@@ -16,7 +16,7 @@ export class AuthService extends BaseService {
         const res = await this.api.post(this.url("/login"), {
             data: { username: user.username, password: user.password },
         });
-        if (!res.ok) {
+        if (!res.ok()) {
             const body = await res.text();
             throw new Error(`Login failed (${res.status()}): ${body}`);
         }

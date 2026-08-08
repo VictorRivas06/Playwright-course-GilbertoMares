@@ -8,7 +8,7 @@ export abstract class BaseService {
     protected abstract basePath(): string;
 
     protected url(path = ""): string {
-        return `${this.baseURL}${this.basePath}${path}`
+        return `${this.baseURL}${this.basePath()}${path}`
     }
 
     async dispose(): Promise<void> {
